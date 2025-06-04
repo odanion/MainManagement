@@ -23,6 +23,11 @@ public class ProductRepository
         return product;
     }
 
+    public Product[] GetAll()
+    {
+        return _context.Products.ToArray();
+    }
+
     public Product GetById(int id)
     {
         return null;

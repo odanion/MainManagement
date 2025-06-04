@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { ProductViewModel } from '../../core/dataContracts/productViewModel';
+import { ProductService } from '../../core/services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -10,11 +12,21 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './products.component.html',
   styleUrl: './products.component.scss'
 })
-export class ProductComponent {
-  public products = [
-    { id: 1, name: 'Product 1', price: 100, category: { name: 'een categorie' } },
-    { id: 2, name: 'Product 2', price: 20, category: { name: 'een categorie2' } }
-  ];
+
+export class ProductComponent implements OnInit {
+  public products: ProductViewModel[] = [];
+  constructor(private _productService: ProductService) {}
+  
+  public ngOnInit(): void {
+    this._productService.getAll().subscribe({
+      next: (receivedProducts: ProductViewModel[]) => {
+        this.products = receivedProducts;
+      },
+      error: (err) => {
+        console.error('Error fetching products', err);
+      }
+    })
+  }
 
   public deleteProduct(productId: number): void {
     console.log(`Product with ID ${productId} deleted`);

@@ -18,6 +18,12 @@ public class ProductService
 
         return createdProduct;
     }
+
+    public Product[] GetAll()
+    {
+        return repository.GetAll();
+    }
+
     public Product GetProductById(int id)
     {
         return null;

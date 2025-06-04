@@ -12,10 +12,15 @@ namespace StockManagement.Controllers;
 public class ProductController : ControllerBase
 {
     [HttpGet]
-    public ProductListViewModel GetList()
+    public ProductViewModel[] GetAll()
     {
-        return MockProductList.ProductList;
+        var service = new ProductService();
+        var products = service.GetAll();
+        var viewModel = Mapper(products);
+
+        return viewModel;
     }
+
 
     [HttpGet("{id}")]
     public ActionResult<ProductViewModel> GetProduct(int id)
@@ -58,6 +63,18 @@ public class ProductController : ControllerBase
             Stock = model.Stock,
             DiscountPercentage = model.DiscountPercentage
         };
+    }
+
+
+    private ProductViewModel[] Mapper(Product[] model)
+    {
+        List<ProductViewModel> products = new();
+        foreach (var product in model)
+        {
+            var mappedObject = Mapper(product);
+            products.Add(mappedObject);
+        }
+        return products.ToArray();
     }
 
     private Product Mapper(CreateProductModel model) 

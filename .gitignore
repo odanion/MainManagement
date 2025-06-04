@@ -6,3 +6,4 @@ dist/
 #=== Visual Studio /.Net ===
 bin/
 obj/
+.vs

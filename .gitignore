@@ -3,7 +3,8 @@ node_modules/
 dist/
 .env
 
-#=== Visual Studio /.Net ===
+#=== Visual Studio /.NET ===
 bin/
 obj/
 .vs
+*.angular
